@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue/dist/vue.global.prod.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+
+    <div>Header</div>
+    <div>Search Options & link to about page</div>
+    <div id="app">
+
+        <ul class="listItems">
+            <li v-for="article in articles" class="listItem">
+                <h3>{{article.title}}</h3>
+                <img :src="article.urlToImage" alt="">
+                <p>{{article.description}}</p>
+                <h5>By {{article.author}}</h5>
+                <h5>Source: {{article.source.name}}</h5>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $.ajax({
+            url: 'https://newsapi.org/v2/everything?q=tesla&from=2022-06-29&sortBy=publishedAt&apiKey=aa920a66e07a42cd96bf10ac5424887c',
+            success: function (result) {
+                console.log(result.articles)
+
+
+                const app = Vue.createApp({
+                    data() {
+                        return {
+                            articles: result.articles
+                        }
+                    }
+                })
+
+                const mountedApp = app.mount("#app")
+            }
+        });
+    </script>
+</body>
+
+</html>
